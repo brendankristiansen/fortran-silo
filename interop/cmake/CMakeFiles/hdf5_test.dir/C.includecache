@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/brendan/Desktop/msuresearch/fortran-silo/fortran-silo/hdf5-test/main.c
+stdio.h
+-
+stdlib.h
+-
+silo.h
+-
+string.h
+-
+

@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/silotest.dir/c_wrapper.c.o  -o silotest /usr/local/lib/libhdf5.dylib /usr/local/lib/libsiloh5.a -lstdc++ -lsz -lz 

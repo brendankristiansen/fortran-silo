@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.8.2/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/interop
+CMAKE_SOURCE_DIR = /Users/brendan/Desktop/msuresearch/fortran-silo/fortran-silo/hdf5-test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/interop
+CMAKE_BINARY_DIR = /Users/brendan/Desktop/msuresearch/fortran-silo/fortran-silo/hdf5-test/cmake
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/interop/CMakeFiles /Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/interop/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/brendan/Desktop/msuresearch/fortran-silo/fortran-silo/hdf5-test/cmake/CMakeFiles /Users/brendan/Desktop/msuresearch/fortran-silo/fortran-silo/hdf5-test/cmake/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/interop/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/brendan/Desktop/msuresearch/fortran-silo/fortran-silo/hdf5-test/cmake/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named silotest
+# Target rules for targets named hdf5_test
 
 # Build rule for target.
-silotest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 silotest
-.PHONY : silotest
+hdf5_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 hdf5_test
+.PHONY : hdf5_test
 
 # fast build rule for target.
-silotest/fast:
-	$(MAKE) -f CMakeFiles/silotest.dir/build.make CMakeFiles/silotest.dir/build
-.PHONY : silotest/fast
+hdf5_test/fast:
+	$(MAKE) -f CMakeFiles/hdf5_test.dir/build.make CMakeFiles/hdf5_test.dir/build
+.PHONY : hdf5_test/fast
 
-c_wrapper.o: c_wrapper.c.o
+main.o: main.c.o
 
-.PHONY : c_wrapper.o
+.PHONY : main.o
 
 # target to build an object file
-c_wrapper.c.o:
-	$(MAKE) -f CMakeFiles/silotest.dir/build.make CMakeFiles/silotest.dir/c_wrapper.c.o
-.PHONY : c_wrapper.c.o
+main.c.o:
+	$(MAKE) -f CMakeFiles/hdf5_test.dir/build.make CMakeFiles/hdf5_test.dir/main.c.o
+.PHONY : main.c.o
 
-c_wrapper.i: c_wrapper.c.i
+main.i: main.c.i
 
-.PHONY : c_wrapper.i
+.PHONY : main.i
 
 # target to preprocess a source file
-c_wrapper.c.i:
-	$(MAKE) -f CMakeFiles/silotest.dir/build.make CMakeFiles/silotest.dir/c_wrapper.c.i
-.PHONY : c_wrapper.c.i
+main.c.i:
+	$(MAKE) -f CMakeFiles/hdf5_test.dir/build.make CMakeFiles/hdf5_test.dir/main.c.i
+.PHONY : main.c.i
 
-c_wrapper.s: c_wrapper.c.s
+main.s: main.c.s
 
-.PHONY : c_wrapper.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-c_wrapper.c.s:
-	$(MAKE) -f CMakeFiles/silotest.dir/build.make CMakeFiles/silotest.dir/c_wrapper.c.s
-.PHONY : c_wrapper.c.s
+main.c.s:
+	$(MAKE) -f CMakeFiles/hdf5_test.dir/build.make CMakeFiles/hdf5_test.dir/main.c.s
+.PHONY : main.c.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... silotest"
-	@echo "... c_wrapper.o"
-	@echo "... c_wrapper.i"
-	@echo "... c_wrapper.s"
+	@echo "... hdf5_test"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 .PHONY : help
 
 
