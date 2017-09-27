@@ -22,5 +22,6 @@ void add_int_(int *ptr_a, *ptr_b, *ptr_c){
 
 void silo_test_(){
 	DBfile *file = DBCreate("sample.silo", DB_CLOBBER, DB_LOCAL, NULL, DB_HDF5);
+	printf("File opened!\n");
 	DBClose(file);
 }

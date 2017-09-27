@@ -1,1 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/cc  -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/hdf5_test.dir/main.c.o  -o hdf5_test /usr/local/lib/libhdf5.dylib /usr/local/lib/libsiloh5.a -lstdc++ -lsz -lz 
