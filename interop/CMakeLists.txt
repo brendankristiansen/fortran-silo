@@ -12,8 +12,8 @@ find_package(Silo)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES c_wrapper.c, driver.f90)
+set(SOURCE_FILES c_wrapper.c driver.f90)
 
 add_executable(silo-interop ${SOURCE_FILES})
 
-target_link_libraries(silo-interop, ${HDF5_LIBRARY} ${Silo_LIBRARY} stdc++ sz z)
+target_link_libraries(silo-interop ${HDF5_LIBRARY} ${Silo_LIBRARY} stdc++ sz z)
