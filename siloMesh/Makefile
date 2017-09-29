@@ -1,6 +1,6 @@
-HDF5_DIR = /Users/mowkes/Repos/opt/hdf5-1.8.17
-SZIP_DIR = /Users/mowkes/Repos/opt/szip-2.1
-SILO_DIR = /Users/mowkes/Repos/opt/silo-4.10.2
+HDF5_DIR = /usr/local/
+SZIP_DIR = /usr/local/
+SILO_DIR = /usr/local/
 SILO_INC = -I$(SILO_DIR)/include
 SILO_LIB = -L$(SILO_DIR)/lib -lsiloh5 -L$(HDF5_DIR)/lib -lhdf5 -L$(SZIP_DIR)/lib -lsz -L/usr/local/lib -lstdc++ -lz
 
