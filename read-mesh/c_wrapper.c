@@ -1,9 +1,12 @@
-#include <stdio.h>
+#include<stdio.h>
 #include<silo.h>
 
 void read_mesh_(int *dimensions, int *origin, int *index_size, int *start_index){
+	printf("Reading mesh in C...");
 	DBfile *openfile = DBOpen("sample.silo", DB_HDF5, DB_READ);
-	DBquadmesh *readmesh = DBGetQuadmesh("sample.silo", "Mesh Silo");
+	printf("Putting quadmesh");
+	DBquadmesh *readmesh = DBGetQuadmesh(openfile, "Mesh Silo");
+	printf("Quadmesh has been put!");
 	*dimensions = readmesh->dims;
 	*origin = readmesh->origin;
 	*index_size = sizeof(readmesh->start_index);
