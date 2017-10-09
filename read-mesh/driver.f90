@@ -8,6 +8,7 @@ program driver
     print *, "Mesh Information!!"
     print *, "Dimensions:", idims
     print *, "Origin:", iorigin
+    print *, "Index size:", iindex
     print *, "Start index for each dimension:"
     do iorigin = iorigin, iindex, 1
         print *, istart(iorigin)
