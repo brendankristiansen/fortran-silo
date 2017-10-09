@@ -25,7 +25,7 @@ endif()
 set(CMAKE_LIBRARY_PATH "/usr/lib/x86_64-linux-gnu")
 
 find_path(Silo_INCLUDE_DIR 
-          NAMES silo.h
+          NAMES silo.inc
           PATHS ${Silo_DIR}/include 
                 ${Silo_INC}
 )

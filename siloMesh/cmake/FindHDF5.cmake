@@ -8,7 +8,7 @@ message("Path = ${HDF5_DIR}")
 
 # First try to find using the user-specific HDF info.
 find_path(HDF5_INCLUDE_DIR 
-          NAMES H5public.h
+          NAMES H5public.inc
           PATHS ${HDF5_DIR}/include 
                 ${HDF5_INC}
           NO_DEFAULT_PATH
@@ -21,7 +21,7 @@ find_library(HDF5_LIBRARY_CORE hdf5 hdf5dll
 
 # if that fails, use the full path
 find_path(HDF5_INCLUDE_DIR 
-          NAMES H5public.h
+          NAMES H5public.inc
           PATHS ${HDF5_DIR}/include 
                 ${HDF5_INC}
 )
