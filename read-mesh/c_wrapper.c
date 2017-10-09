@@ -8,12 +8,13 @@ typedef struct fake_mesh {
 	int start_index[];	//Index of start points
 }fake_mesh;
 
-void test_mesh_(int *dimensions, int *origin, int *index_size, int **start_index){
+void test_mesh_(int *dimensions, int *origin, int *index_size, int*start_index){
 	printf("Test mesh!\n");
 	int dims = 3;
 	int orig = 0;
 	int size = 3;
-	//*start_index;
+	int index_array[] = {1, 2, 3};
+	*start_index = index_array;
 	*index_size = size;
 	*origin = orig;
 	*dimensions = dims;
