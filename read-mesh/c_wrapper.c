@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<silo.h>
+#include<string.h>
 
 typedef struct fake_mesh {
 	int dimensions;		//Dimensions in mesh
@@ -44,23 +45,31 @@ void test_mesh(c_int_array *my_array){
 	//return start_index;
 }
 
-//void read_mesh_(int *dimensions, int *origin, int *index_size, int **start_index){
-//	printf("Reading mesh in C...\n");
-//	DBfile *openfile = DBOpen("sample1.silo", DB_HDF5, DB_READ);
-//	printf("Putting quadmesh\n");
-//	DBquadmesh *readmesh = DBGetQuadmesh(openfile, "testdir/mesh");
-//	printf("Mesh information: (C):\n");
-//	printf("Dimensions:\t%i\n", readmesh->dims);
-//	printf("Origin:\t%i\n", readmesh->origin);
-//	printf("index_size:\t\i\n", sizeof(readmesh->start_index));
-//	for(int i = 0; i < index_size; i++){
-//		//printf("Start index %i:\t%i\n", i, readmesh->start_index[i]);
-//	}
-//	*dimensions = readmesh->dims;
-//	*origin = readmesh->origin;
-//	*index_size = sizeof(readmesh->start_index);
-//	*start_index = readmesh->start_index;
-//}
+DBquadmesh load_dbquadmesh_(){
+	DBfile *openfile = DBOpen("sample.silo", DB_HDF5, DB_READ);
+	DBquadmesh *readmesh = DBGetQuadmesh(openfile, "testdor/mesh");
+	return *readmesh;
+}
+
+void read_mesh_(int *dimensions, int *origin, int *index_size, int **start_index){
+	printf("Reading mesh in C...\n");
+	DBfile *openfile = DBOpen("sample1.silo", DB_HDF5, DB_READ);
+	printf("Putting quadmesh\n");
+	DBquadmesh *readmesh = DBGetQuadmesh(openfile, "testdir/mesh");
+	printf("Mesh information: (C):\n");
+	printf("Dimensions:\t%i\n", readmesh->dims);
+	printf("Origin:\t%i\n", readmesh->origin);
+	printf("index_size:\t\i\n", sizeof(readmesh->start_index));
+	for(int i = 0; i < index_size; i++){
+		printf("Start index %i:\t%i\n", i, readmesh->start_index[i]);
+	}
+	/*
+	*dimensions = readmesh->dims;
+	*origin = readmesh->origin;
+	*index_size = sizeof(readmesh->start_index);
+	*start_index = readmesh->start_index;
+	*/
+	}
 
 void add_int_(int *ptr_a, int *ptr_b, int *ptr_c){
 	int a = *ptr_a;
