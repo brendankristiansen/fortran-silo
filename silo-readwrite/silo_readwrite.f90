@@ -55,6 +55,17 @@ program silo_readwrite
         end subroutine
     end interface
 
+    ! ##############################
+    ! Interface for c's strlen function
+    ! ##############################
+    interface
+        integer(c_size_t) function strlen(str) bind(C)
+            use, intrinsic :: iso_c_binding, only: c_ptr, c_size_t
+            implicit none
+            type(c_ptr), intent(in), value :: str
+        end function
+    end interface
+
     ! ################
     ! C int array type
     ! ################
@@ -125,7 +136,7 @@ program silo_readwrite
     print *, "# READ DBQUADMESH #"
     print *, ""
     call load_dbquadmesh(quadmesh_in)
-    call c_f_pointer(quadmesh_in%mesh_name, mesh_name, shape=[4])   ! Big ol' problem here: need to know length of arrays
+    call c_f_pointer(quadmesh_in%mesh_name, mesh_name, shape=[strlen(quadmesh_in%mesh_name)])
     call c_f_pointer(quadmesh_in%coords, coords, shape=[30])        ! Other problem: coords is 2-dimensional
     print *, "Mesh name: ", mesh_name
     print *, "Mesh origin: ", quadmesh_in%origin
