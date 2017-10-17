@@ -8,6 +8,8 @@ typedef struct {
     int *content;
 } c_int_array;
 
+const char* MESH_NAME = "mesh_name";
+
 /*
  * Creates sample.silo with basic test mesh
  */
@@ -29,8 +31,7 @@ void create_silo_file_(void) {
     coordnames[2] = strdup("z");
 
     double *coordinates[3] = {nodex, nodey, nodez};
-
-    DBPutQuadmesh(file, "mesh", NULL, coordinates, dimensions, 3, DB_FLOAT, DB_COLLINEAR, NULL);
+    DBPutQuadmesh(file, MESH_NAME, NULL, coordinates, dimensions, 3, DB_FLOAT, DB_COLLINEAR, NULL);
 
     DBClose(file);
 }
@@ -65,7 +66,7 @@ void test_array_(c_int_array *my_array){
  */
 DBquadmesh load_dbquadmesh(){
     DBfile *openfile = DBOpen("sample.silo", DB_HDF5, DB_READ);
-    DBquadmesh *readmesh = DBGetQuadmesh(openfile, "mesh");
+    DBquadmesh *readmesh = DBGetQuadmesh(openfile, MESH_NAME);
     DBClose(openfile);
     return *readmesh;
 }
