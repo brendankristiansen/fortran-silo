@@ -68,6 +68,10 @@ DBquadmesh load_dbquadmesh(){
     DBfile *openfile = DBOpen("sample.silo", DB_HDF5, DB_READ);
     DBquadmesh *readmesh = DBGetQuadmesh(openfile, MESH_NAME);
     DBClose(openfile);
+    int i;
+    for(i = 0; i < sizeof(readmesh->coords); ++i){
+	printf("Mesh coords in C: %d\n", readmesh->coords[i]);
+    }
     // BRENDAN-- print out the contents of readmesh->coords
     return *readmesh;
 }
