@@ -79,14 +79,9 @@ program silo_readwrite
     ! Interface for quadmesh_data
     ! ###########################
     interface
-        function get_linear_array() bind(c) result(data_in)
+        subroutine get_linear_array_sub(data_in) bind(c)
             import :: quadmesh_data
-            type(quadmesh_data), pointer :: data_in
-        end function
-    end interface
-
-    interface
-        subroutine get_linear_array_noreturn() bind(c)
+            type(quadmesh_data), intent(out) :: data_in
         end subroutine
     end interface
 
@@ -156,7 +151,7 @@ program silo_readwrite
 
     type(quadmesh_data) :: data_in
     integer, pointer :: dimensions(:) => null()
-    real, pointer :: vals(:) => null()
+    real (kind=8), pointer :: vals(:) => null()
     integer :: iter
 
     ! #####
@@ -190,18 +185,18 @@ program silo_readwrite
     print *, "################"
     print *, "# READ QUADVAR #"
 
+    !TODO: Fix error "Can't convert real(4) to type(quadmesh_data) at (1)"
+    call get_linear_array_sub(data_in)
+
     call c_f_pointer(data_in%dims, dimensions, shape=[data_in%ndims])
     call c_f_pointer(data_in%data, vals, shape=[data_in%nodes])
 
-    !TODO: Fix error "Can't convert real(4) to type(quadmesh_data) at (1)"
-!    call get_linear_array()
-    data_in = get_linear_array()
-
     print *, "Printing mesh vals:"
     print *, "Number of dimensions:", data_in%ndims
-    print *, "Size of each dimension:", data_in%dims
+    print *, "Size of each dimension:", dimensions
+
     print *, "Data:"
-    do iter = 0, data_in%nodes, 1
+    do iter = 1, data_in%nodes, 1
         print *, vals(iter)
     end do
     print *, "################"

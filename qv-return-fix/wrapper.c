@@ -140,9 +140,9 @@ int* get_elements(int dimension){
  * Returns number of data points in a mesh
  */
 int get_linear_array_size(int ndims, int* dims){
-    int i, size = 0;
+    int i, size = 1;
     for (i = 0; i < ndims; ++i) {
-        size += dims[i];
+        size *= dims[i];
     }
     return size;
 }
@@ -160,7 +160,7 @@ quadmesh_data* get_linear_array(){
     int i;
     quadmesh_data* corrected_mesh;
     corrected_mesh = (quadmesh_data*) malloc(sizeof(quadmesh_data));
-    //corrected_mesh->ndims = data->ndims;
+    corrected_mesh->ndims = data->ndims;
 //    for(i = 0; i < corrected_mesh->ndims; ++i){
 //        corrected_mesh->dims[i] = data->dims[i];
 //    }
@@ -172,4 +172,9 @@ quadmesh_data* get_linear_array(){
     corrected_mesh->nodes = array_size;
     return corrected_mesh;
     //(*val) = ((double**)(data->vals))[0][*x];
+}
+
+void get_linear_array_sub(quadmesh_data* data) {
+    quadmesh_data *tmp = get_linear_array();
+    *data = *tmp;
 }
