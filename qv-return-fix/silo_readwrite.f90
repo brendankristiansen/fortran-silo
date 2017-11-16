@@ -45,23 +45,53 @@ program silo_readwrite
         type(C_PTR) :: ghost_name_labels
     end type
 
-    ! ##############################
-    ! Interface for loading quadmesh
-    ! ##############################
+    ! ###################
+    ! Multimesh Data Type
+    ! ###################
+    type, bind(c) :: quadmesh_data
+        integer(C_INT) :: ndims
+        type(C_PTR) :: dims
+        integer(C_INT) :: nodes
+        type(C_PTR) :: data
+    end type quadmesh_data
+
+    ! #####################################
+    ! Interface for loading quadmesh struct
+    ! #####################################
     interface
-        subroutine load_dbquadmesh(quadmesh) bind(c)
+        function load_dbquadmesh() bind(c) result(quadmesh)
             import :: db_quadmesh
-            type(db_quadmesh) :: quadmesh
+            type(db_quadmesh), pointer :: quadmesh
+        end function
+    end interface
+
+    ! #####################
+    ! Interface for quadvar
+    ! #####################
+    interface
+        function load_quadvar_size() bind(c) result(c_int_array)
+            import :: db_quadmesh
+            type(db_quadmesh), pointer :: quadmesh
+        end function
+    end interface
+
+    ! ###########################
+    ! Interface for quadmesh_data
+    ! ###########################
+    interface
+        subroutine get_linear_array_sub(data_in) bind(c)
+            import :: quadmesh_data
+            type(quadmesh_data), intent(out) :: data_in
         end subroutine
     end interface
 
-    ! ##############################
+    ! #################################
     ! Interface for c's strlen function
-    ! ##############################
+    ! #################################
     interface
         integer(c_size_t) function strlen(str) bind(C)
             use, intrinsic :: iso_c_binding, only: c_ptr, c_size_t
-            implicit none
+            !implicit none
             type(c_ptr), intent(in), value :: str
         end function
     end interface
@@ -83,6 +113,16 @@ program silo_readwrite
             type(c_int_array) :: my_array
         end subroutine
     end interface
+
+    ! #########################
+    ! Interface for C int array
+    ! #########################
+!    interface
+!        subroutine test_mesh(my_array) bind(c)
+!            import :: c_int_array
+!            type(c_int_array) :: my_array
+!        end subroutine
+!    end interface
 
     ! ################
     ! C int array data
@@ -106,22 +146,17 @@ program silo_readwrite
     integer, pointer :: start_index(:) => null()
     integer, pointer :: size_index(:) => null()
 
+    real, pointer :: coordinates_out(:) => null()       ! For second pointer
+    real, pointer :: coordinates(:) => null()       ! For second pointer
+
+    type(quadmesh_data) :: data_in
+    integer, pointer :: dimensions(:) => null()
+    real (kind=8), pointer :: vals(:) => null()
+    integer :: iter
+
     ! #####
     ! Begin
     ! #####
-
-    ! Create test data
-    print *, "#####################"
-    print *, "# C GENERATED ARRAY #"
-    print *, ""
-    call test_Array(my_array)
-    print *, "Test array: (should be 123)"
-
-    print *, "Array length:", my_array%len
-    call c_f_pointer(my_array%content, pa, shape=[my_array%len])
-    print *, "Contains:", pa
-    print *, "FINISHED WITH C ARRAY"
-    print *, "#####################"
 
     ! Create silo file
     print *, "######################"
@@ -135,12 +170,54 @@ program silo_readwrite
     print *, "###################"
     print *, "# READ DBQUADMESH #"
     print *, ""
-    call load_dbquadmesh(quadmesh_in)
+    quadmesh_in = load_dbquadmesh()
     call c_f_pointer(quadmesh_in%mesh_name, mesh_name, shape=[strlen(quadmesh_in%mesh_name)])
-    call c_f_pointer(quadmesh_in%coords, coords, shape=[30])        ! Other problem: coords is 2-dimensional
+    call c_f_pointer(quadmesh_in%coords, coords, shape=[20])        ! Other problem: coords is 2-dimensional
     print *, "Mesh name: ", mesh_name
     print *, "Mesh origin: ", quadmesh_in%origin
-    print *, "Coordinates: ", coords
+    !call get_dbquadmesh(coordinates_out)
+    !call c_f_pointer(coordinates_out, coordinates, shape=[20])
+    print *, "Coordinates: ", coordinates
     print *, "FINISHED READING MESH"
     print *, "###################"
+
+    ! Read quadvar data
+    print *, "################"
+    print *, "# READ QUADVAR #"
+
+    !TODO: Fix error "Can't convert real(4) to type(quadmesh_data) at (1)"
+    call get_linear_array_sub(data_in)
+
+    call c_f_pointer(data_in%dims, dimensions, shape=[data_in%ndims])
+    call c_f_pointer(data_in%data, vals, shape=[data_in%nodes])
+
+    print *, "Printing mesh vals:"
+    print *, "Number of dimensions:", data_in%ndims
+    print *, "Size of each dimension:", dimensions
+
+    print *, "Data:"
+    do iter = 1, data_in%nodes, 1
+        print *, vals(iter)
+    end do
+    print *, "################"
 end program
+
+!subroutine print_vals()
+!    use iso_c_binding
+!    !implicit none
+!    type(quadmesh_data), pointer :: data => null()
+!    integer, pointer :: dimensions(:) => null()
+!    real, pointer :: vals(:) => null
+!    integer :: iter
+!
+!    call c_f_pointer(data%dims, dimensions, data%ndims)
+!    call c_f_pointer(data%data, vals, data%nodes)
+!
+!    print *, "Printing mesh vals:"
+!    print *, "Number of dimensions:", data%ndims
+!    print *, "Size of each dimension:", data%dims
+!    print *, "Data:"
+!    do iter = 0, data%nodes, 1
+!        print *, vals(iter)
+!    end do
+!end subroutine print_vals
