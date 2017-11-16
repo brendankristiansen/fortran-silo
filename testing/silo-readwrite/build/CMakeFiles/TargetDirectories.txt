@@ -1,0 +1,3 @@
+/Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/silo-readwrite/build/CMakeFiles/rebuild_cache.dir
+/Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/silo-readwrite/build/CMakeFiles/edit_cache.dir
+/Users/brendan/Desktop/msuresearch/fortran-silo/shared/fortran-silo/silo-readwrite/build/CMakeFiles/interop-test.dir
