@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <silo.h>
 #include <string.h>
+#include <float.h>
 
 /*
  * Array of integers with length
@@ -64,19 +65,38 @@ void create_silo_file_(void) {
 
     DBPutQuadmesh(file, MESH_NAME, coordnames, coordinates, dimensions, 2, DB_DOUBLE, DB_COLLINEAR, NULL);
 
-    double data[2][3][4];
+    // Change dimension sizes here! :)
+    int dims[3] = {2, 3, 4};
+    /*
+     * Problem description:
+     *      x, y, z
+     *      2, 3, 4 works perfectly.
+     *      changing x works.
+     *      changing y works.
+     *      changing z works.
+     *      problems with 2, 35, 100000
+     *      (Data too big for double??)
+     */
+
+    long cells = dims[0] + dims[1] + dims[2];
+   // double data[][][] = malloc(sizeof(double * cells));
+    double data[dims[0]][dims[1]][dims[2]];
     int i, j, k;
+
     double cell = 1.0;
-    for(i = 0; i < 2; ++i){
-        for(j = 0; j < 3; ++j){
-            for (k = 0; k < 4; ++k){
+    for(i = 0; i < dims[0]; ++i){
+        for(j = 0; j < dims[1]; ++j){
+            for (k = 0; k < dims[2]; ++k){
                 data[i][j][k] = cell;
+                if (cell == DBL_MAX-1){       // Not working perfectly but oh well.
+                    cell -= DBL_MAX-2;
+                    cell += 0.01;
+                    continue;
+                }
                 cell += 1.0;
             }
         }
     }
-
-    int dims[3] = {2, 3, 4};
 
     DBPutQuadvar1(file, "data", MESH_NAME, data, dims, 3, NULL, 0, DB_DOUBLE, DB_ZONECENT, NULL);
 
