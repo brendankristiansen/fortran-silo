@@ -11,3 +11,4 @@
 
 DBquadmesh* get_dbquadmesh_f(char* filename, char* varname);
 int get_nodes_in_array(int ndims, int* dims);
+DBquadvar get_dbquadvar_f(char* filename, char* varname);

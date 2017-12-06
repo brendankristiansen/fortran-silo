@@ -7,9 +7,9 @@
 #include<string.h>
 #include<silo.h>
 
-DBquadmesh* get_dbquadmesh_f(char* filename, char* varname){
+DBquadmesh* get_dbquadmesh_f(char* filename, char* meshname){
     FILE* openfile = DBOpen(filename, DB_HDF5, DB_READ);
-    DBquadmesh* mesh_in = DBGetQuadmesh(openfile, varname);
+    DBquadmesh* mesh_in = DBGetQuadmesh(openfile, meshname);
     DBClose(openfile);
     return mesh_in;
 }
@@ -21,4 +21,13 @@ int get_nodes_in_array(int ndims, int* dims){
         nodes += dims[i];
     }
     return nodes;
-};
+}
+
+DBquadvar* get_dbquadvar_f(char* filename, char* varname){
+    FILE* openfile = DBOpen(filename, DB_HDF5, DB_READ);
+    DBquadvar* var_in = DBGetQuadvar(openfile, varname);
+    DBClose(openfile);
+    DBquadvar* corrected_var = var_in;
+    corrected_var->vals = ((double*) (var_in->vals)[0]);
+    return corrected_var;
+}

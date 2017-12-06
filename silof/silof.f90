@@ -74,4 +74,30 @@ module silof
         integer(C_INT) :: centering                                 ! Explicit centering knowledge
         real(C_DOUBLE) :: missing_value                             ! value to indicate var data is invalid/missing
     end type db_quadvar
+
+    interface
+        integer(c_size_t) function strlen(str) bind(C)
+            use, intrinsic :: iso_c_binding, only: c_ptr, c_size_t
+            type(c_ptr), intent(in), value :: str
+        end function
+    end interface
+
+    interface
+        function load_db_quadmesh_f(filename, meshname) bind(c) result(quadmesh)
+            import :: db_quadmesh
+            character (len=128), intent(in) :: filename
+            character (len=128), intent(in) :: meshname
+            type(db_quadmesh), intent(out), pointer :: quadmesh
+        end function
+    end interface
+
+    interface
+        function load_db_quadvar_f(filename, varname) bind(c) result(quadvar)
+            import :: db_quadvar
+            character (len=128), intent(in) :: filename
+            character (len=128), intent(in) :: varname
+            type(db_quadvar), intent(out), pointer :: quadvar
+            ! Do pointer conversions in here???
+        end function
+    end interface
 end module silof

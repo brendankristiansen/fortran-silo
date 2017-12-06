@@ -9,9 +9,9 @@
 #include <silo.h>
 #include "silof_wrapper.h"
 
-const char* FILENAME = "";
-const char* MESHNAME = "";
-const char* VARNAME = "";
+const char* FILENAME = "silo-sample.silo";
+const char* MESHNAME = "samplemesh";
+const char* VARNAME = "samplevar";
 
 const bool GENERATE_MESH = TRUE;
 const bool GENERATE_VAR = TRUE;
@@ -28,6 +28,11 @@ int main(void){
     double data[2][3][4];
     int i, j, k;
 
+    int nodes = 0;
+    for(i = 0; i < ndims; ++i){
+        nodes += dims[i];
+    }
+
     if(GENERATE_MESH == TRUE) {
 
         char *coordnames[3];
@@ -35,16 +40,12 @@ int main(void){
         coordnames[0] = strdup("x");
         coordnames[1] = strdup("y");
         coordnames[2] = strdup("z");
-        double *coordinates[] = malloc(sizeof(double * 1));
+        double* coordinates = (double*) malloc(sizeof(double) * nodes);
 
         double cell = 1.0;
-        for (i = 0; i < dims[0]; ++i) {
-            for (j = 0; j < dims[1]; ++j) {
-                for (k = 0; k < 4; ++k) {
-                    coordinates[i][j][k] = cell;
-                    cell += 1.0;
-                }
-            }
+        for (i = 0; i < nodes; ++i) {
+            coordinates[i] = cell;
+            cell += 1.0;
         }
 
         DBPutQuadmesh(file, MESHNAME, coordnames, coordinates, dims, 2, DB_DOUBLE, DB_COLLINEAR, NULL);
